@@ -6,4 +6,5 @@ public class World
     public int nextPointId = 0;
     public Dictionary<int, Connection> connections = new Dictionary<int, Connection>();
     public int nextConnectionId = 0;
+    public List<Color> freeColors = new List<Color>();
 }

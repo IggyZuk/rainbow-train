@@ -6,5 +6,6 @@ public enum Color
     Cyan,
     Magenta,
     Yellow,
-    Count
+    Black,
+    Gray
 }

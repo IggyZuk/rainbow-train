@@ -1,5 +1,5 @@
 public static class Config
 {
-    public const int Width = 8;
-    public const int Height = 16;
+    public const int Width = 4;
+    public const int Height = 15;
 }

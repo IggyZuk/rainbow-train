@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-public static class PathService
+﻿public static class PathService
 {
     public static void GeneratePath(World model, int width, int height)
     {
@@ -15,15 +13,15 @@ public static class PathService
             }
         }
 
-        for (int i = 0; i < (int)Color.Count; i++)
+        for (int i = 0; i < 3; i++)
         {
-            int randomId = PointService.GetPointInGrid(model, MathService.RandomRange(0, width), 0).id;
-            Color randomColor = (Color)i;
-            PointService.AddColorToPointWithId(model, randomId, randomColor);
+            Color randomFreeColor = ColorService.GetFreeColor(model);
+            Point randomPoint = PointService.GetPointInGrid(model, MathService.RandomRange(0, width), 0);
+            PointService.AddColorToPointWithId(model, randomPoint.id, randomFreeColor);
         }
     }
 
-    public static void Connect(World model, int width, int height)
+    public static void ConnectPathFromPreviousNodeColors(World model, int width, int height)
     {
         for (int y = 1; y < height; y++)
         {
@@ -34,6 +32,7 @@ public static class PathService
                 for (int i = fromPoint.colors.Count - 1; i >= 0; i--)
                 {
                     Color color = fromPoint.colors[i];
+                    fromPoint.colors.Remove(color);
 
                     Point toPoint = PointService.GetPointInGrid(
                         model,
@@ -42,9 +41,22 @@ public static class PathService
                             MathService.Clamp(x + 2, 0, width)),
                         y
                     );
+
                     ConnectionService.CreateConnection(model, fromPoint.id, toPoint.id, color);
-                    PointService.AddColorToPointWithId(model, toPoint.id, color);
-                    fromPoint.colors.Remove(color);
+
+                    if (MathService.Random() < 0.75f)
+                    {
+                        PointService.AddColorToPointWithId(model, toPoint.id, color);
+                    }
+                    else
+                    {
+                        ColorService.ReleaseColor(model, color);
+                        for (int j = 0; j < MathService.RandomRange(1, 3); j++)
+                        {
+                            PointService.AddColorToPointWithId(model, toPoint.id, ColorService.GetFreeColor(model));
+                        }
+                    }
+
                 }
             }
         }

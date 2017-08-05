@@ -1,9 +1,9 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class WorldController : MonoBehaviour
 {
     World model = new World();
+    int step = 0;
 
     void Awake()
     {
@@ -13,19 +13,24 @@ public class WorldController : MonoBehaviour
             Config.Height / 2f
         );
 
+        ColorService.ResetFreeColors(model);
         PathService.GeneratePath(model, Config.Width, Config.Height);
-        StartCoroutine(Connect_Coroutine());
     }
 
-    IEnumerator Connect_Coroutine()
+    void OnGUI()
     {
-        int life = 0;
-        while (life <= Config.Height)
+        if (GUI.Button(new Rect(0, 0, 100, 50), "Next Step"))
         {
-            PathService.Connect(model, Config.Width, life);
-            life++;
-            yield return new WaitForSeconds(1);
+            PathService.ConnectPathFromPreviousNodeColors(model, Config.Width, ++step);
         }
+        if (GUI.Button(new Rect(100, 0, 100, 50), "Reset"))
+        {
+            model = new World();
+            ColorService.ResetFreeColors(model);
+            PathService.GeneratePath(model, Config.Width, Config.Height);
+            step = 0;
+        }
+
     }
 
     void OnDrawGizmos()
@@ -35,43 +40,23 @@ public class WorldController : MonoBehaviour
         foreach (var p in model.points.Values)
         {
             Gizmos.color = UnityEngine.Color.white;
-            Gizmos.DrawSphere(p.pos.Vector3(), 0.2f);
+            Gizmos.DrawSphere(p.pos.Vector3(), 0.1f);
 
             float y = 0f;
             foreach (var c in p.colors)
             {
                 y += 0.2f;
-                Gizmos.color = GetColor(c);
+                Gizmos.color = ColorService.GetUnityColor(c);
                 Gizmos.DrawSphere(p.pos.Vector3() + new Vector3(0.2f, 0f, y - 0.2f), 0.1f);
             }
         }
 
         foreach (var c in model.connections.Values)
         {
-            Gizmos.color = GetColor(c.color);
+            Gizmos.color = ColorService.GetUnityColor(c.color);
             Point fromPoint = PointService.GetPointWithId(model, c.fromPointId);
             Point toPoint = PointService.GetPointWithId(model, c.toPointId);
             Gizmos.DrawLine(fromPoint.pos.Vector3(), toPoint.pos.Vector3());
         }
-    }
-
-    public UnityEngine.Color GetColor(Color color)
-    {
-        switch (color)
-        {
-            case Color.Red:
-            return UnityEngine.Color.red;
-            case Color.Green:
-            return UnityEngine.Color.green;
-            case Color.Blue:
-            return UnityEngine.Color.blue;
-            case Color.Cyan:
-            return UnityEngine.Color.cyan;
-            case Color.Magenta:
-            return UnityEngine.Color.magenta;
-            case Color.Yellow:
-            return UnityEngine.Color.yellow;
-        }
-        return UnityEngine.Color.blue;
     }
 }
