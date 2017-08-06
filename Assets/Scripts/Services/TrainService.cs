@@ -16,7 +16,12 @@ public static class TrainService
         {
             Point forwardPoint = PointService.GetPointWithId(model, matchingConnection.toPointId);
             model.train.gridPos = forwardPoint.gridPos;
-            model.train.pos = forwardPoint.pos;
+            //model.train.pos = forwardPoint.pos;
         }
+    }
+
+    public static void TickTrain(Train train)
+    {
+        train.pos = Vector.Lerp(train.pos, new Vector(train.gridPos.x, train.gridPos.y), 0.1f);
     }
 }
