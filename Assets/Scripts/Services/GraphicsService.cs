@@ -14,11 +14,11 @@ public static class GraphicsService
         IMDraw.WireSphere3D(pos, radius, color);
     }
 
-    public static void DrawLine3D(Vector3 fromPos, Vector3 toPos, Color color)
+    public static void DrawLine3D(Vector3 fromPos, Vector3 toPos, float thickness, Color color)
     {
         Vector3 diff = toPos - fromPos;
         Quaternion dir = Quaternion.LookRotation(diff, Vector3.up);
-        IMDraw.Box3D(Vector3.Lerp(fromPos, toPos, 0.5f), dir, new Vector3(0.1f, 0.1f, diff.magnitude), color);
+        IMDraw.Box3D(Vector3.Lerp(fromPos, toPos, 0.5f), dir, new Vector3(thickness, thickness, diff.magnitude), color);
     }
 
     public static void DrawLine(Vector3 fromPos, Vector3 toPos, Color color)
