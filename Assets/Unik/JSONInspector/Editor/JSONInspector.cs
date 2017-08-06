@@ -113,7 +113,7 @@ namespace Unik
             GUI.EndScrollView();
         }
 
-        private void Refresh()
+        public void Refresh()
         {
             _rootField = TryParse(_stringJson, "ROOT", null);
             _rootField.IsOpened = true;

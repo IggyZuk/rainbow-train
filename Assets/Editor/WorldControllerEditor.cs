@@ -11,9 +11,11 @@ public class WorldControllerEditor : Editor
 
         WorldController controller = (WorldController)target;
 
-        if (GUILayout.Button("Model JSON"))
+        if (GUILayout.Button("Update JSON"))
         {
             JSONInspector.Open(controller.GetModelJson());
+            JSONInspector window = EditorWindow.GetWindow<JSONInspector>("JSON");
+            window.Refresh();
         }
     }
 }
