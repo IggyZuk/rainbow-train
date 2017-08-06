@@ -2,8 +2,8 @@
 
 public class WorldController : MonoBehaviour
 {
-    World model = new World();
-    int step = 0;
+    World model;
+    int step;
 
     void Awake()
     {
@@ -13,8 +13,19 @@ public class WorldController : MonoBehaviour
             Config.Height / 2f
         );
 
+        InitWorld(new World());
+    }
+
+    void InitWorld(World newModel)
+    {
+        model = newModel;
         ColorService.ResetFreeColors(model);
         PathService.GeneratePath(model, Config.Width, Config.Height);
+
+        Point startPoint = PointService.GetStartingPoint(model, Config.Width);
+        model.train.pos = startPoint.pos;
+        model.train.gridPos = startPoint.gridPos;
+        model.train.selectedColor = startPoint.colors[0];
     }
 
     void OnGUI()
@@ -23,14 +34,27 @@ public class WorldController : MonoBehaviour
         {
             PathService.ConnectPathFromPreviousNodeColors(model, Config.Width, ++step);
         }
-        if (GUI.Button(new Rect(100, 0, 100, 50), "Reset"))
+        if (GUI.Button(new Rect(100, 0, 100, 50), "Complete"))
         {
-            model = new World();
-            ColorService.ResetFreeColors(model);
-            PathService.GeneratePath(model, Config.Width, Config.Height);
+            PathService.ConnectPathFromPreviousNodeColors(model, Config.Width, Config.Height);
+        }
+        if (GUI.Button(new Rect(0, 50, 100, 50), "Move"))
+        {
+            TrainService.MoveTrainForward(model);
+        }
+        if (GUI.Button(new Rect(100, 50, 100, 50), "Reset"))
+        {
+            InitWorld(new World());
             step = 0;
         }
-
+        if (GUI.Button(new Rect(0, 100, 100, 50), "Save"))
+        {
+            Save();
+        }
+        if (GUI.Button(new Rect(100, 100, 100, 50), "Load"))
+        {
+            Load();
+        }
     }
 
     void OnDrawGizmos()
@@ -58,5 +82,29 @@ public class WorldController : MonoBehaviour
             Point toPoint = PointService.GetPointWithId(model, c.toPointId);
             Gizmos.DrawLine(fromPoint.pos.Vector3(), toPoint.pos.Vector3());
         }
+
+        Gizmos.color = UnityEngine.Color.red;
+        Gizmos.DrawSphere(model.train.pos.Vector3(), 0.2f);
+    }
+
+    public string GetModelJson()
+    {
+        return Newtonsoft.Json.JsonConvert.SerializeObject(model);
+    }
+
+    public void Save()
+    {
+        string json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
+        PlayerPrefs.SetString("world", json);
+        Debug.Log("Saved: " + json);
+        //json
+    }
+
+    public void Load()
+    {
+        string json = PlayerPrefs.GetString("world");
+        World loadedModel = Newtonsoft.Json.JsonConvert.DeserializeObject<World>(json);
+        InitWorld(loadedModel);
+        Debug.Log("Loaded: " + json);
     }
 }

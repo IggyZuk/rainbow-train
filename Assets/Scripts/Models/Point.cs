@@ -1,10 +1,5 @@
 ﻿using System.Collections.Generic;
 
-public class GridPos {
-    public int x;
-    public int y;
-}
-
 public class Point
 {
     public int id = -1;

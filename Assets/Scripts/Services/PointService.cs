@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public static class PointService
 {
     public static Point CreatePoint(World model)
@@ -18,6 +20,11 @@ public static class PointService
         return null;
     }
 
+    public static Point GetPointInGrid(World model, GridPos gridPos)
+    {
+        return GetPointInGrid(model, gridPos.x, gridPos.y);
+    }
+
     public static Point GetPointInGrid(World model, int x, int y)
     {
         foreach (var p in model.points.Values)
@@ -26,6 +33,24 @@ public static class PointService
             {
                 return p;
             }
+        }
+        return null;
+    }
+
+    public static Point GetStartingPoint(World model, int width)
+    {
+        List<Point> points = new List<Point>();
+        for (int i = 0; i < width; i++)
+        {
+            Point p = GetPointInGrid(model, i, 0);
+            if (p.colors.Count > 0)
+            {
+                points.Add(p);
+            }
+        }
+        if (points.Count > 0)
+        {
+            return points[MathService.RandomRange(0, points.Count)];
         }
         return null;
     }
