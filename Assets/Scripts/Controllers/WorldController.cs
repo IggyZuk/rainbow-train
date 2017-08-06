@@ -23,13 +23,16 @@ public class WorldController : MonoBehaviour
 
         Point startPoint = PointService.GetStartingPoint(model, Config.Width);
         model.train.pos = startPoint.pos;
-        model.train.gridPos = startPoint.gridPos;
+        model.train.fromGridPos = startPoint.gridPos;
+        model.train.toGridPos = startPoint.gridPos;
         model.train.selectedColor = startPoint.colors[0];
+
+        PathService.ConnectPathFromPreviousNodeColors(model, Config.Width, Config.Height);
     }
 
     void Update()
     {
-        TrainService.TickTrain(model.train);
+        TrainService.TickTrain(model, Time.deltaTime);
         view.Tick(model);
 
         Vector3 camPos = model.train.pos.Vector3();

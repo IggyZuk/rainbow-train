@@ -29,7 +29,7 @@ public class GraphicsWorldView : MonoBehaviour
             Point fromPoint = PointService.GetPointWithId(model, c.fromPointId);
             Point toPoint = PointService.GetPointWithId(model, c.toPointId);
             var color = ColorService.GetUnityColor(c.color);
-            color.a = 0.25f;
+            color.a = 0.75f;
             GraphicsService.DrawLine3D(fromPoint.pos.Vector3(), toPoint.pos.Vector3(), 0.1f, color);
 
             GraphicsService.DrawLabel(
@@ -41,6 +41,6 @@ public class GraphicsWorldView : MonoBehaviour
 
         Color trainColor = ColorService.GetUnityColor(model.train.selectedColor);
         GraphicsService.DrawCube(model.train.pos.Vector3(), Vector3.one * 0.5f, trainColor);
-        GraphicsService.DrawLabel(model.train.pos.Vector3(), trainColor, "TRAIN" + "\n" + model.train.gridPos);
+        GraphicsService.DrawLabel(model.train.pos.Vector3(), trainColor, "TRAIN" + "\n" + model.train.toGridPos);
     }
 }
