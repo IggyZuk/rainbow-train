@@ -4,10 +4,21 @@ public static class TrainService
 {
     public static bool MoveTrainForward(World model)
     {
+        Logger.Log("Current: " + model.train.color + ", " + "Next: " + model.train.nextColor);
+
         Point trainPoint = PointService.GetPointInGrid(model, model.train.toGridPos);
         List<Connection> cons = ConnectionService.GetConnectionsForPointId(model, trainPoint.id);
-        Logger.Log(model.train.selectedColor);
-        Connection matchingConnection = cons.Find(x => x.color == model.train.selectedColor);
+
+        Connection matchingConnection = cons.Find(x => x.color == model.train.nextColor);
+        if (matchingConnection == null)
+        {
+            matchingConnection = cons.Find(x => x.color == model.train.color);
+        }
+        else
+        {
+            model.train.color = model.train.nextColor;
+        }
+
         if (matchingConnection == null)
         {
             Logger.Log("Game Over!");
@@ -18,7 +29,6 @@ public static class TrainService
             Point forwardPoint = PointService.GetPointWithId(model, matchingConnection.toPointId);
             model.train.fromGridPos = model.train.toGridPos;
             model.train.toGridPos = forwardPoint.gridPos;
-            //model.train.pos = forwardPoint.pos;
             return true;
         }
     }
@@ -32,7 +42,8 @@ public static class TrainService
             {
                 model.train.progress -= 1f;
             }
-            else {
+            else
+            {
                 model.train.progress = 1f;
             }
         }

@@ -25,7 +25,8 @@ public class WorldController : MonoBehaviour
         model.train.pos = startPoint.pos;
         model.train.fromGridPos = startPoint.gridPos;
         model.train.toGridPos = startPoint.gridPos;
-        model.train.selectedColor = startPoint.colors[0];
+        model.train.color = startPoint.colors[0];
+        model.train.nextColor = model.train.color;
 
         PathService.ConnectPathFromPreviousNodeColors(model, Config.Width, Config.Height);
     }
@@ -90,44 +91,44 @@ public class WorldController : MonoBehaviour
         GUI.backgroundColor = Color.red;
         if (GUI.Button(new Rect(width * 0, Screen.height - height, width, height), "Red"))
         {
-            model.train.selectedColor = ColorType.Red;
+            model.train.nextColor = ColorType.Red;
         }
         GUI.backgroundColor = Color.green;
 
         if (GUI.Button(new Rect(width * 1, Screen.height - height, width, height), "Green"))
         {
-            model.train.selectedColor = ColorType.Green;
+            model.train.nextColor = ColorType.Green;
         }
         GUI.backgroundColor = Color.blue;
         if (GUI.Button(new Rect(width * 2, Screen.height - height, width, height), "Blue"))
         {
-            model.train.selectedColor = ColorType.Blue;
+            model.train.nextColor = ColorType.Blue;
         }
         GUI.backgroundColor = Color.cyan;
         if (GUI.Button(new Rect(width * 3, Screen.height - height, width, height), "Cyan"))
         {
-            model.train.selectedColor = ColorType.Cyan;
+            model.train.nextColor = ColorType.Cyan;
         }
         GUI.backgroundColor = Color.magenta;
 
         if (GUI.Button(new Rect(width * 4, Screen.height - height, width, height), "Magenta"))
         {
-            model.train.selectedColor = ColorType.Magenta;
+            model.train.nextColor = ColorType.Magenta;
         }
         GUI.backgroundColor = Color.yellow;
         if (GUI.Button(new Rect(width * 5, Screen.height - height, width, height), "Yellow"))
         {
-            model.train.selectedColor = ColorType.Yellow;
+            model.train.nextColor = ColorType.Yellow;
         }
         GUI.backgroundColor = Color.black;
         if (GUI.Button(new Rect(width * 6, Screen.height - height, width, height), "Black"))
         {
-            model.train.selectedColor = ColorType.Black;
+            model.train.nextColor = ColorType.Black;
         }
         GUI.backgroundColor = Color.gray;
         if (GUI.Button(new Rect(width * 7, Screen.height - height, width, height), "Gray"))
         {
-            model.train.selectedColor = ColorType.Gray;
+            model.train.nextColor = ColorType.Gray;
         }
     }
 

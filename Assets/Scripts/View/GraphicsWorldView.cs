@@ -45,7 +45,7 @@ public class GraphicsWorldView : MonoBehaviour
             }
         }
 
-        Color trainColor = ColorService.GetUnityColor(model.train.selectedColor);
+        Color trainColor = ColorService.GetUnityColor(model.train.nextColor);
         GraphicsService.DrawCube(model.train.pos.Vector3(), Vector3.one * 0.5f, trainColor);
         GraphicsService.DrawLabel(model.train.pos.Vector3(), trainColor, "TRAIN" + "\n" + model.train.toGridPos);
     }
