@@ -55,7 +55,7 @@ public static class PointService
         return null;
     }
 
-    public static void AddColorToPointWithId(World model, int id, Color color)
+    public static void AddColorToPointWithId(World model, int id, ColorType color)
     {
         Point p = GetPointWithId(model, id);
         if (p != null)

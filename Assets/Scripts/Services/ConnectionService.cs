@@ -3,7 +3,7 @@ using System.Linq;
 
 public static class ConnectionService
 {
-    public static Connection CreateConnection(World model, int fromPointId, int toPointId, Color color)
+    public static Connection CreateConnection(World model, int fromPointId, int toPointId, ColorType color)
     {
         Point fromPoint = PointService.GetPointWithId(model, fromPointId);
         Point toPoint = PointService.GetPointWithId(model, toPointId);

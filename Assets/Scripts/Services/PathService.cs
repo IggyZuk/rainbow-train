@@ -15,7 +15,7 @@
 
         for (int i = 0; i < 3; i++)
         {
-            Color randomFreeColor = ColorService.GetFreeColor(model);
+            ColorType randomFreeColor = ColorService.GetFreeColor(model);
             Point randomPoint = PointService.GetPointInGrid(model, MathService.RandomRange(0, width), 0);
             PointService.AddColorToPointWithId(model, randomPoint.id, randomFreeColor);
         }
@@ -31,7 +31,7 @@
 
                 for (int i = fromPoint.colors.Count - 1; i >= 0; i--)
                 {
-                    Color color = fromPoint.colors[i];
+                    ColorType color = fromPoint.colors[i];
                     fromPoint.colors.Remove(color);
 
                     Point toPoint = PointService.GetPointInGrid(

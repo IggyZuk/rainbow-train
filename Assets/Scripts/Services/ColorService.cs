@@ -2,24 +2,24 @@ public static class ColorService
 {
     public static void ResetFreeColors(World model)
     {
-        foreach (Color color in System.Enum.GetValues(typeof(Color)))
+        foreach (ColorType color in System.Enum.GetValues(typeof(ColorType)))
         {
-            if (color == Color.Gray) continue;
+            if (color == ColorType.Gray) continue;
 
             model.freeColors.Add(color);
         }
     }
 
-    public static Color GetFreeColor(World model)
+    public static ColorType GetFreeColor(World model)
     {
-        if (model.freeColors.Count == 0) return Color.Gray;
+        if (model.freeColors.Count == 0) return ColorType.Gray;
 
-        Color freeRandomColor = model.freeColors[MathService.RandomRange(0, model.freeColors.Count)];
+        ColorType freeRandomColor = model.freeColors[MathService.RandomRange(0, model.freeColors.Count)];
         model.freeColors.Remove(freeRandomColor);
         return freeRandomColor;
     }
 
-    public static void ReleaseColor(World model, Color color)
+    public static void ReleaseColor(World model, ColorType color)
     {
         if (!model.freeColors.Contains(color))
         {
@@ -27,23 +27,23 @@ public static class ColorService
         }
     }
 
-    public static UnityEngine.Color GetUnityColor(Color color)
+    public static UnityEngine.Color GetUnityColor(ColorType color)
     {
         switch (color)
         {
-            case Color.Red:
+            case ColorType.Red:
             return UnityEngine.Color.red;
-            case Color.Green:
+            case ColorType.Green:
             return UnityEngine.Color.green;
-            case Color.Blue:
+            case ColorType.Blue:
             return UnityEngine.Color.blue;
-            case Color.Cyan:
+            case ColorType.Cyan:
             return UnityEngine.Color.cyan;
-            case Color.Magenta:
+            case ColorType.Magenta:
             return UnityEngine.Color.magenta;
-            case Color.Yellow:
+            case ColorType.Yellow:
             return UnityEngine.Color.yellow;
-            case Color.Black:
+            case ColorType.Black:
             return UnityEngine.Color.black;
         }
         return UnityEngine.Color.gray;
