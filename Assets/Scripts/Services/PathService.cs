@@ -51,12 +51,11 @@
                     else
                     {
                         ColorService.ReleaseColor(model, color);
-                        for (int j = 0; j < MathService.RandomRange(1, 3); j++)
+                        for (int j = 0; j < MathService.RandomRange(1, 1); j++)
                         {
                             PointService.AddColorToPointWithId(model, toPoint.id, ColorService.GetFreeColor(model));
                         }
                     }
-
                 }
             }
         }

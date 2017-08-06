@@ -2,6 +2,7 @@
 
 public class World
 {
+    public int seed = 0;
     public Dictionary<int, Point> points = new Dictionary<int, Point>();
     public int nextPointId = 0;
     public Dictionary<int, Connection> connections = new Dictionary<int, Connection>();

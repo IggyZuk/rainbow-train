@@ -28,7 +28,8 @@ public static class GraphicsService
 
     public static void DrawLabel(Vector3 pos, Color color, string text)
     {
-        IMDraw.LabelShadowed(pos, color, LabelPivot.MIDDLE_CENTER, LabelAlignment.CENTER, text);
+        IMDraw.LabelShadowed(pos, 0f, 0f, color, LabelPivot.MIDDLE_CENTER, LabelAlignment.CENTER, "■");
+        IMDraw.LabelShadowed(pos, 25f, 0f, color, LabelPivot.MIDDLE_LEFT, LabelAlignment.LEFT, text);
 
     }
 }

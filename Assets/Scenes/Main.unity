@@ -210,7 +210,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 100
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_MaterialGL: {fileID: 2100000, guid: 126a17d2a41b0364aad540081f2d4f65, type: 2}
   m_MaterialMesh: {fileID: 2100000, guid: 23da08da0fe8e2f42b2c3cc0dc8a9194, type: 2}
   m_Font: {fileID: 12800000, guid: c5184d3137772cd4aa348ad31cc2b6b0, type: 3}
-  m_FontSize: 20
+  m_FontSize: 18
   m_3DDistanceCull: 0
   m_3DDistanceCullMaxDist: 100
   m_3DLabelFadeOverDistance: 0
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_MaxGLVertices: 10000
   m_MaxMeshVertices: 10000
   m_MeshLayer: 0
-  m_MaxVisibleLabels: 64
+  m_MaxVisibleLabels: 256
 --- !u!114 &609005437
 MonoBehaviour:
   m_ObjectHideFlags: 0

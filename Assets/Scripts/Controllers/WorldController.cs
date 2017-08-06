@@ -9,13 +9,15 @@ public class WorldController : MonoBehaviour
 
     void Awake()
     {
-        InitWorld(new World());
+        InitWorld();
         view = new GraphicsWorldView();
     }
 
-    void InitWorld(World newModel)
+    void InitWorld()
     {
-        model = newModel;
+        model = new World();
+        Random.InitState(MathService.RandomRange(0, 1000));
+
         ColorService.ResetFreeColors(model);
         PathService.GeneratePath(model, Config.Width, Config.Height);
 
@@ -46,8 +48,7 @@ public class WorldController : MonoBehaviour
         }
         if (GUI.Button(new Rect(100, 50, 100, 50), "Reset"))
         {
-            InitWorld(new World());
-            step = 0;
+            InitWorld();
         }
         if (GUI.Button(new Rect(0, 100, 100, 50), "Save"))
         {
@@ -68,6 +69,7 @@ public class WorldController : MonoBehaviour
     {
         string json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
         PlayerPrefs.SetString("world", json);
+
         Debug.Log("Saved: " + json);
     }
 
@@ -75,7 +77,11 @@ public class WorldController : MonoBehaviour
     {
         string json = PlayerPrefs.GetString("world");
         World loadedModel = Newtonsoft.Json.JsonConvert.DeserializeObject<World>(json);
-        InitWorld(loadedModel);
+        model = loadedModel;
+        Random.InitState(model.seed);
+
         Debug.Log("Loaded: " + json);
+
+        step = 0;
     }
 }

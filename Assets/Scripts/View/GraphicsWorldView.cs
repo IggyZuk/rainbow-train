@@ -10,7 +10,7 @@ public class GraphicsWorldView : MonoBehaviour
         foreach (var p in model.points.Values)
         {
             GraphicsService.DrawCube(p.pos.Vector3(), Vector3.one * 0.25f, Config.Colors.Blue);
-            GraphicsService.DrawLabel(p.pos.Vector3(), Config.Colors.White, p.id.ToString());
+            //GraphicsService.DrawLabel(p.pos.Vector3(), Config.Colors.White, p.id.ToString() + "\n" + p.pos.ToString());
 
             float y = 0f;
             foreach (var c in p.colors)
@@ -29,9 +29,15 @@ public class GraphicsWorldView : MonoBehaviour
             Point fromPoint = PointService.GetPointWithId(model, c.fromPointId);
             Point toPoint = PointService.GetPointWithId(model, c.toPointId);
             GraphicsService.DrawLine3D(fromPoint.pos.Vector3(), toPoint.pos.Vector3(), ColorService.GetUnityColor(c.color));
+
+            GraphicsService.DrawLabel(
+                Vector.Lerp(fromPoint.pos, toPoint.pos, 0.5f).Vector3(),
+                Config.Colors.White,
+                c.id.ToString()
+            );
         }
 
-        GraphicsService.DrawCube(model.train.pos.Vector3(), Vector3.one * 0.25f, Config.Colors.Red);
-        GraphicsService.DrawLabel(model.train.pos.Vector3(), Config.Colors.Red, "TRAIN");
+        GraphicsService.DrawCube(model.train.pos.Vector3(), Vector3.one * 0.5f, Config.Colors.Red);
+        GraphicsService.DrawLabel(model.train.pos.Vector3(), Config.Colors.Red, "TRAIN" + "\n" + model.train.gridPos);
     }
 }
