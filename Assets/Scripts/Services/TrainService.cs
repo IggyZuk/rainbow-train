@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 
 public static class TrainService
 {
@@ -15,7 +14,7 @@ public static class TrainService
         }
         else
         {
-            Point forwardPoint = PointService.GetPointWithId(model, cons[0].toPointId);
+            Point forwardPoint = PointService.GetPointWithId(model, matchingConnection.toPointId);
             model.train.gridPos = forwardPoint.gridPos;
             model.train.pos = forwardPoint.pos;
         }
