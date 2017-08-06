@@ -72,6 +72,14 @@ public class WorldController : MonoBehaviour
         {
             Load();
         }
+        if (GUI.Button(new Rect(0, 150, 100, 50), "Toggle Nodes"))
+        {
+            model.debugSettings.isShowingNodes = !model.debugSettings.isShowingNodes;
+        }
+        if (GUI.Button(new Rect(100, 150, 100, 50), "Toggle Connection Info"))
+        {
+            model.debugSettings.isShowingConnectionInfo = !model.debugSettings.isShowingConnectionInfo;
+        }
     }
 
     void DrawColorButtons()

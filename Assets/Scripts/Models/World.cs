@@ -9,4 +9,5 @@ public class World
     public int nextConnectionId = 0;
     public List<ColorType> freeColors = new List<ColorType>();
     public Train train = new Train();
+    public DebugSettings debugSettings = new DebugSettings();
 }

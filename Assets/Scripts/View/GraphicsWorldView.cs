@@ -9,8 +9,11 @@ public class GraphicsWorldView : MonoBehaviour
 
         foreach (var p in model.points.Values)
         {
-            GraphicsService.DrawCube(p.pos.Vector3(), Vector3.one * 0.25f, Config.Colors.Blue);
-            //GraphicsService.DrawLabel(p.pos.Vector3(), Config.Colors.White, p.id.ToString() + "\n" + p.pos.ToString());
+            if (model.debugSettings.isShowingNodes)
+            {
+                GraphicsService.DrawCube(p.pos.Vector3(), Vector3.one * 0.25f, Config.Colors.Blue);
+                GraphicsService.DrawLabel(p.pos.Vector3(), Config.Colors.White, p.id.ToString() + "\n" + p.pos.ToString());
+            }
 
             float y = 0f;
             foreach (var c in p.colors)
@@ -32,11 +35,14 @@ public class GraphicsWorldView : MonoBehaviour
             color.a = 0.75f;
             GraphicsService.DrawLine3D(fromPoint.pos.Vector3(), toPoint.pos.Vector3(), 0.1f, color);
 
-            GraphicsService.DrawLabel(
-                Vector.Lerp(fromPoint.pos, toPoint.pos, 0.5f).Vector3(),
-                Config.Colors.White,
-                c.id.ToString()
-            );
+            if (model.debugSettings.isShowingConnectionInfo)
+            {
+                GraphicsService.DrawLabel(
+                    Vector.Lerp(fromPoint.pos, toPoint.pos, 0.5f).Vector3(),
+                    Config.Colors.White,
+                    c.id.ToString()
+                );
+            }
         }
 
         Color trainColor = ColorService.GetUnityColor(model.train.selectedColor);
